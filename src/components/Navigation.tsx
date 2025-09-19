@@ -1,8 +1,7 @@
 import React from 'react';
-import { 
-  Users, Calendar, Clock, FileText, BarChart3, 
-  MapPin, Bot, Menu, X, Settings, DollarSign, Building2,
-  Upload, Receipt, CalendarCheck
+import {
+  Users, Calendar, Clock, FileText, BarChart3,
+  MapPin, Bot, X, Settings, DollarSign, Building2
 } from 'lucide-react';
 
 interface NavigationProps {
@@ -38,12 +37,10 @@ const Navigation: React.FC<NavigationProps> = ({
     // { id: 'employee-excel-upload', label: 'Employee Excel Upload', icon: Upload, roles: ['admin'] },
     { id: 'user-management', label: 'User Management', icon: Settings, roles: ['admin'] },
     { id: 'salary-management', label: 'Salary Management', icon: DollarSign, roles: ['admin'] },
-    { id: 'payslip-management', label: 'Payslip Management', icon: Receipt, roles: ['admin', 'supervisor'] },
     { id: 'holiday-management', label: 'Holiday Management', icon: Calendar, roles: ['admin'] },
     { id: 'roster', label: 'Roster', icon: Calendar, roles: ['admin', 'supervisor', 'employee'] },
     { id: 'attendance', label: 'Attendance', icon: Clock, roles: ['admin', 'supervisor', 'employee'] },
     { id: 'leaves', label: 'Leaves', icon: FileText, roles: ['admin', 'supervisor', 'employee'] },
-    { id: 'leave-balances', label: 'Leave Balances', icon: CalendarCheck, roles: ['admin', 'supervisor', 'employee'] },
     { id: 'reports', label: 'Reports', icon: FileText, roles: ['admin', 'supervisor', 'employee'] },
     { id: 'field-ops', label: 'Field Operations', icon: MapPin, roles: ['admin', 'supervisor'] },
     { id: 'ai-assistant', label: 'AI Assistant', icon: Bot, roles: ['admin', 'supervisor'] },

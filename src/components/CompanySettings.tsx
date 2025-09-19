@@ -78,7 +78,7 @@ const tabs: { id: TabId; label: string; icon: React.ComponentType<{ size?: numbe
   { id: 'payroll', label: getNavLabel('payroll'), icon: DollarSign },
   { id: 'features', label: getNavLabel('settings'), icon: Settings },
   { id: 'compliance', label: getNavLabel('reports'), icon: Globe },
-  { id: 'ui', label: getNavLabel('settings') === 'Admin Settings' ? 'UI & Branding' : getNavLabel('settings'), icon: Palette }
+  { id: 'ui', label: 'UI & Branding', icon: Palette }
 ];
 
   return (
@@ -569,8 +569,11 @@ const tabs: { id: TabId; label: string; icon: React.ComponentType<{ size?: numbe
                 checked={localConfig.mauritiusSettings?.enabled || false}
                 onChange={(e) => handleConfigChange({
                   mauritiusSettings: {
-                    ...localConfig.mauritiusSettings,
-                    enabled: e.target.checked
+                    enabled: e.target.checked,
+                    thirteenthSalary: localConfig.mauritiusSettings?.thirteenthSalary || { enabled: false, paymentMonth: 12, calculationBase: 'basic_salary', proRated: true },
+                    eyb: localConfig.mauritiusSettings?.eyb || { enabled: false, minimumServiceMonths: 12, calculationFormula: 'basic_salary * 0.0833' },
+                    overtimeLimits: localConfig.mauritiusSettings?.overtimeLimits || { maxOvertimePerWeek: 10, maxOvertimePerMonth: 60, enforceCompliance: true },
+                    statutoryContributions: localConfig.mauritiusSettings?.statutoryContributions || {}
                   }
                 })}
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
@@ -593,10 +596,13 @@ const tabs: { id: TabId; label: string; icon: React.ComponentType<{ size?: numbe
                             min="0"
                             max="10"
                             step="0.1"
-                            value={localConfig.mauritiusSettings?.statutoryContributions?.employeeNPF?.rate || 3.0}
+                            value={localConfig.mauritiusSettings?.statutoryContributions?.employeeNPF?.rate ?? 3.0}
                             onChange={(e) => handleConfigChange({
                               mauritiusSettings: {
-                                ...localConfig.mauritiusSettings,
+                                enabled: localConfig.mauritiusSettings?.enabled ?? false,
+                                thirteenthSalary: localConfig.mauritiusSettings?.thirteenthSalary || { enabled: false, paymentMonth: 12, calculationBase: 'basic_salary', proRated: true },
+                                eyb: localConfig.mauritiusSettings?.eyb || { enabled: false, minimumServiceMonths: 12, calculationFormula: 'basic_salary * 0.0833' },
+                                overtimeLimits: localConfig.mauritiusSettings?.overtimeLimits || { maxOvertimePerWeek: 10, maxOvertimePerMonth: 60, enforceCompliance: true },
                                 statutoryContributions: {
                                   ...localConfig.mauritiusSettings?.statutoryContributions,
                                   employeeNPF: {
@@ -618,10 +624,13 @@ const tabs: { id: TabId; label: string; icon: React.ComponentType<{ size?: numbe
                             min="0"
                             max="10"
                             step="0.1"
-                            value={localConfig.mauritiusSettings?.statutoryContributions?.employeeNSF?.rate || 2.5}
+                            value={localConfig.mauritiusSettings?.statutoryContributions?.employeeNSF?.rate ?? 2.5}
                             onChange={(e) => handleConfigChange({
                               mauritiusSettings: {
-                                ...localConfig.mauritiusSettings,
+                                enabled: localConfig.mauritiusSettings?.enabled ?? false,
+                                thirteenthSalary: localConfig.mauritiusSettings?.thirteenthSalary || { enabled: false, paymentMonth: 12, calculationBase: 'basic_salary', proRated: true },
+                                eyb: localConfig.mauritiusSettings?.eyb || { enabled: false, minimumServiceMonths: 12, calculationFormula: 'basic_salary * 0.0833' },
+                                overtimeLimits: localConfig.mauritiusSettings?.overtimeLimits || { maxOvertimePerWeek: 10, maxOvertimePerMonth: 60, enforceCompliance: true },
                                 statutoryContributions: {
                                   ...localConfig.mauritiusSettings?.statutoryContributions,
                                   employeeNSF: {
@@ -638,7 +647,7 @@ const tabs: { id: TabId; label: string; icon: React.ComponentType<{ size?: numbe
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="border rounded-lg p-4">
                       <h4 className="font-medium text-gray-900 mb-2">Employer Contributions</h4>
                       <div className="space-y-2">
@@ -649,14 +658,17 @@ const tabs: { id: TabId; label: string; icon: React.ComponentType<{ size?: numbe
                             min="0"
                             max="10"
                             step="0.1"
-                            value={localConfig.mauritiusSettings?.statutoryContributions?.employerNPF?.rate || 6.0}
+                            value={localConfig.mauritiusSettings?.statutoryContributions?.employerNPF?.rate ?? 6.0}
                             onChange={(e) => handleConfigChange({
                               mauritiusSettings: {
-                                ...localConfig.mauritiusSettings,
+                                enabled: localConfig.mauritiusSettings?.enabled ?? false,
+                                thirteenthSalary: localConfig.mauritiusSettings?.thirteenthSalary || { enabled: false, paymentMonth: 12, calculationBase: 'basic_salary', proRated: true },
+                                eyb: localConfig.mauritiusSettings?.eyb || { enabled: false, minimumServiceMonths: 12, calculationFormula: 'basic_salary * 0.0833' },
+                                overtimeLimits: localConfig.mauritiusSettings?.overtimeLimits || { maxOvertimePerWeek: 10, maxOvertimePerMonth: 60, enforceCompliance: true },
                                 statutoryContributions: {
                                   ...localConfig.mauritiusSettings?.statutoryContributions,
                                   employerNPF: {
-                                    ...localConfig.mauritiusSettings?.statutoryContributions?.employerNPF,
+                                    enabled: localConfig.mauritiusSettings?.statutoryContributions?.employerNPF?.enabled ?? true,
                                     rate: parseFloat(e.target.value)
                                   }
                                 }
@@ -674,14 +686,17 @@ const tabs: { id: TabId; label: string; icon: React.ComponentType<{ size?: numbe
                             min="0"
                             max="10"
                             step="0.1"
-                            value={localConfig.mauritiusSettings?.statutoryContributions?.employerNSF?.rate || 2.5}
+                            value={localConfig.mauritiusSettings?.statutoryContributions?.employerNSF?.rate ?? 2.5}
                             onChange={(e) => handleConfigChange({
                               mauritiusSettings: {
-                                ...localConfig.mauritiusSettings,
+                                enabled: localConfig.mauritiusSettings?.enabled ?? false,
+                                thirteenthSalary: localConfig.mauritiusSettings?.thirteenthSalary || { enabled: false, paymentMonth: 12, calculationBase: 'basic_salary', proRated: true },
+                                eyb: localConfig.mauritiusSettings?.eyb || { enabled: false, minimumServiceMonths: 12, calculationFormula: 'basic_salary * 0.0833' },
+                                overtimeLimits: localConfig.mauritiusSettings?.overtimeLimits || { maxOvertimePerWeek: 10, maxOvertimePerMonth: 60, enforceCompliance: true },
                                 statutoryContributions: {
                                   ...localConfig.mauritiusSettings?.statutoryContributions,
                                   employerNSF: {
-                                    ...localConfig.mauritiusSettings?.statutoryContributions?.employerNSF,
+                                    enabled: localConfig.mauritiusSettings?.statutoryContributions?.employerNSF?.enabled ?? true,
                                     rate: parseFloat(e.target.value)
                                   }
                                 }

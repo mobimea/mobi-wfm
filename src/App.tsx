@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+  import React, { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
 import Navigation from './components/Navigation';
 import Dashboard from './components/Dashboard';
 import EmployeeManagement from './components/EmployeeManagement';
 import EmployeeExcelUpload from './components/EmployeeExcelUpload';
-import PayslipManagement from './components/PayslipManagement';
-import LeaveBalances from './components/LeaveBalances';
+
 import AttendanceSystem from './components/AttendanceSystem';
 import LeaveManagement from './components/LeaveManagement';
 import RosterManagement from './components/RosterManagement';
@@ -91,8 +90,8 @@ function App() {
     loading: configLoading
   } = useCompanyConfig();
 
-  // UI customization
-  const { labels, branding } = useUICustomization();
+// UI customization
+const { branding } = useUICustomization();
 
   // Handle mobile detection
   useEffect(() => {
@@ -383,20 +382,8 @@ function App() {
             currentUser={currentUser}
           />
         );
-      case 'payslip-management':
-        return (
-          <PayslipManagement 
-            employees={filteredData.employees}
-            currentUser={currentUser}
-          />
-        );
-      case 'leave-balances':
-        return (
-          <LeaveBalances 
-            employees={filteredData.employees}
-            currentUser={currentUser}
-          />
-        );
+
+
       case 'attendance':
         return (
           <AttendanceSystem 

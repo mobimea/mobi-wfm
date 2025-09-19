@@ -4,6 +4,7 @@ import { LeaveRequest, Employee } from '../types';
 import { calculateLeaveDeduction } from '../utils/payroll';
 import { getPayrollCalculator } from '../utils/dynamicPayroll';
 import { ConfigManager } from '../utils/config';
+import LeaveBalances from './LeaveBalances';
 
 // UUID generator for new leave requests
 const generateUUID = (): string => {
@@ -34,6 +35,7 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({
   updateLeaveStatus,
   currentUser
 }) => {
+  const [activeTab, setActiveTab] = useState<'leave' | 'balances'>('leave');
   const [showRequestForm, setShowRequestForm] = useState(false);
   const systemConfig = ConfigManager.getConfig();
   const [formData, setFormData] = useState({
@@ -207,9 +209,10 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <h1 className="text-3xl font-bold text-gray-900">Enhanced Leave Management</h1>
-        {(currentUser?.role === 'employee' || currentUser?.role === 'supervisor') && (
+        <h1 className="text-3xl font-bold text-gray-900">Leave Management</h1>
+        {(currentUser?.role === 'employee' || currentUser?.role === 'supervisor') && activeTab === 'leave' && (
           <button
             onClick={() => setShowRequestForm(true)}
             className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
@@ -219,6 +222,37 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({
           </button>
         )}
       </div>
+
+      {/* Tabs */}
+      <div className="bg-white rounded-lg shadow-sm">
+        <div className="border-b border-gray-200">
+          <nav className="-mb-px flex space-x-8 px-6" aria-label="Tabs">
+            <button
+              onClick={() => setActiveTab('leave')}
+              className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'leave'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Leave Requests
+            </button>
+            <button
+              onClick={() => setActiveTab('balances')}
+              className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'balances'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Leave Balances
+            </button>
+          </nav>
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === 'leave' && (
+          <div className="p-6">
 
       {/* Enhanced Leave Types Info */}
       <div className="bg-white rounded-lg shadow-sm border p-6">
@@ -663,6 +697,15 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({
           </div>
         </div>
       )}
+          </div>
+        )}
+
+        {activeTab === 'balances' && (
+          <div className="p-6">
+            <LeaveBalances employees={employees} currentUser={currentUser} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

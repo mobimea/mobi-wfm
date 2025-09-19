@@ -33,37 +33,35 @@ export interface CompanyConfiguration {
   
   // Overtime Rules (Customizable)
   overtimeRules: {
-    ot1_5: { 
-      rate: number; 
-      triggerHours: number; 
+    ot1_5: {
+      rate: number;
+      triggerHours: number;
       breakDeductions: string[];
       description: string;
+      enabled: boolean;
     };
-    ot2_0: { 
-      rate: number; 
+    ot2_0: {
+      rate: number;
       triggers: string[];
       enabled: boolean;
       breakDeductions: string[];
       description: string;
     };
-    ot3_0: { 
+    ot3_0: {
       triggerConditions: string[];
-      rate: number; 
+      rate: number;
       triggers: string[];
       enabled: boolean;
       breakDeductions: string[];
       description: string;
     };
-    ot1_0: { 
+    ot1_0: {
       triggerConditions: string[];
       enabled: boolean;
       rate: number;
-      enabled: boolean;
       triggers: string[];
       breakDeductions: string[];
       description: string;
-      triggerConditions: string[];
-      triggerConditions: string[];
     };
   };
   
@@ -140,35 +138,35 @@ export interface CompanyConfiguration {
   // Mauritius Compliance (Optional Module)
   mauritiusSettings?: {
     enabled: boolean;
-    
+
     // Statutory Contributions
-    statutoryContributions: {
-      employeeNPF: { enabled: boolean; rate: number; }; // 3%
-      employeeNSF: { enabled: boolean; rate: number; }; // 2.5%
-      employeeCSG: { enabled: boolean; rate: number; }; // 1%
-      employerNPF: { enabled: boolean; rate: number; }; // 6%
-      employerNSF: { enabled: boolean; rate: number; }; // 2.5%
-      employerCSG: { enabled: boolean; rate: number; }; // 2%
-      trainingLevy: { enabled: boolean; rate: number; }; // 1.5%
+    statutoryContributions?: {
+      employeeNPF?: { enabled: boolean; rate: number; }; // 3%
+      employeeNSF?: { enabled: boolean; rate: number; }; // 2.5%
+      employeeCSG?: { enabled: boolean; rate: number; }; // 1%
+      employerNPF?: { enabled: boolean; rate: number; }; // 6%
+      employerNSF?: { enabled: boolean; rate: number; }; // 2.5%
+      employerCSG?: { enabled: boolean; rate: number; }; // 2%
+      trainingLevy?: { enabled: boolean; rate: number; }; // 1.5%
     };
-    
+
     // 13th Month Salary
-    thirteenthSalary: {
+    thirteenthSalary?: {
       enabled: boolean;
       paymentMonth: number;
       calculationBase: 'basic_salary' | 'total_earnings';
       proRated: boolean;
     };
-    
+
     // End of Year Bonus
-    eyb: {
+    eyb?: {
       enabled: boolean;
       minimumServiceMonths: number; // Default 12
       calculationFormula: string;
     };
-    
+
     // Overtime Limits (Mauritius Law)
-    overtimeLimits: {
+    overtimeLimits?: {
       maxOvertimePerWeek: number; // 10 hours per law
       maxOvertimePerMonth: number; // 60 hours per law
       enforceCompliance: boolean;

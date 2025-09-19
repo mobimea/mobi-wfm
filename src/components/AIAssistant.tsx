@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Bot, Send, Lightbulb, TrendingUp, Users, Calendar } from 'lucide-react';
+import { Bot, Send, Lightbulb, TrendingUp, Users } from 'lucide-react';
 import { Employee, AttendanceRecord, LeaveRequest } from '../types';
-import { MONTHLY_SALARIES } from '../data/demoData';
-import { PAYROLL_CONSTANTS } from '../utils/payroll';
 
 interface AIAssistantProps {
   employees: Employee[];
@@ -97,8 +95,8 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
         const newSalary = parseFloat(salaryMatch[0]);
         if (newSalary > 0 && newSalary <= 50000) {
           // Actually update the employee salary
-          onEmployeeUpdate(employees.map(emp => 
-            emp.id === employeeMatch.id 
+          onEmployeeUpdate(employees.map(emp =>
+            emp.id === employeeMatch!.id
               ? { ...emp, monthly_salary: newSalary }
               : emp
           ));
@@ -138,8 +136,8 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
         
         if (newSalary <= 50000) {
           // Actually update the employee salary
-          onEmployeeUpdate(employees.map(emp => 
-            emp.id === employeeMatch.id 
+          onEmployeeUpdate(employees.map(emp =>
+            emp.id === employeeMatch!.id
               ? { ...emp, monthly_salary: newSalary }
               : emp
           ));
